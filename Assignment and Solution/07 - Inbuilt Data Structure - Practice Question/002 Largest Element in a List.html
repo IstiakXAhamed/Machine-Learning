@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Assignment</title>
+
+    <style>
+      body {
+        font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto,
+          segoe ui, Helvetica, Arial, sans-serif, apple color emoji,
+          segoe ui emoji, segoe ui symbol;
+        font-weight: 400;
+        line-height: 22.4px;
+        font-size: 16px;
+      }
+      p, ul, ol {
+        font-size: 16px;
+        font-weight: 400;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: bold;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        max-width: none;
+      }
+      .code-snippet {
+        background-color: #fff;
+        border: 1px solid #d1d7dc;
+        color: #b4690e;
+        font-size: 90%;
+        padding: 0.2rem 0.4rem;
+      }
+      .code-block {
+        background-color: #fff;
+        color: #b4690e;
+        font-size: 90%;
+      }
+      .black-block {
+        color: #000000;
+      }
+      .italic-text {
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body onload="main()">
+    <h1 id="coding-title"></h1>
+    <div>
+      <h2>Instructions</h2>
+      <div id="coding-instructions"></div>
+    </div>
+    <div>
+      <h2>Test(s)</h2>
+      <div id="coding-tests"></div>
+    </div>
+    <div>
+      <h2>Solution(s)</h2>
+      <div id="coding-solutions"></div>
+    </div>
+
+    <script>
+      const quizData = {"title": "002 Largest Element in a List", "hasInstructions": true, "hasTests": true, "hasSolutions": true, "instructions": "<p><strong>Find the Largest Element in a List</strong></p><p>Write a Python function that finds and returns the largest element in a given list of integers.</p><p><strong>Parameters</strong>:</p><ul><li><p><code>numbers</code> (List of integers): The input list containing integers.</p></li></ul><p><strong>Returns</strong>:</p><ul><li><p>An integer representing the largest element in the input list.</p></li></ul><p><strong>Example</strong>:</p><ol><li><p><strong>Input</strong>: <code>numbers = [3, 8, 2, 10, 5]</code><br><strong>Output</strong>: <code>10</code></p></li><li><p><strong>Input</strong>: <code>numbers = [-5, -10, -2, -1, -7]</code><br><strong>Output</strong>: <code>-1</code></p></li></ol>", "tests": [{"file_name": "evaluate.py", "content": "import unittest\nfrom exercise import find_largest\n\nclass TestFindLargest(unittest.TestCase):\n\n    def test_positive_numbers(self):\n        result = find_largest([3, 8, 2, 10, 5])\n        self.assertEqual(result, 10, \"The largest element is incorrect for the list [3, 8, 2, 10, 5]\")\n\n    def test_negative_numbers(self):\n        result = find_largest([-5, -10, -2, -1, -7])\n        self.assertEqual(result, -1, \"The largest element is incorrect for the list [-5, -10, -2, -1, -7]\")\n\n    def test_mixed_numbers(self):\n        result = find_largest([-3, 0, 5, -10, 8, 2])\n        self.assertEqual(result, 8, \"The largest element is incorrect for the list [-3, 0, 5, -10, 8, 2]\")\n\n    def test_single_element(self):\n        result = find_largest([42])\n        self.assertEqual(result, 42, \"The largest element is incorrect for a single-element list [42]\")\n\n    def test_duplicate_largest(self):\n        result = find_largest([5, 5, 3, 5, 4])\n        self.assertEqual(result, 5, \"The largest element is incorrect for the list with duplicate largest [5, 5, 3, 5, 4]\")\n\nif __name__ == '__main__':\n    unittest.main()"}], "solutions": [{"file_name": "exercise.py", "content": "def find_largest(numbers):\n    # Check if the list is empty\n    if not numbers:\n        return None  # or raise an exception, depending on requirements\n\n    # Initialize the largest number as the first element\n    largest = numbers[0]\n    \n    # Iterate through the list starting from the second element\n    for num in numbers[1:]:\n        # If we find a number larger than our current largest, update largest\n        if num > largest:\n            largest = num\n    \n    # Return the largest number found\n    return largest\n\n# Alternative solution using built-in max() function:\n# def find_largest(numbers):\n#     return max(numbers) if numbers else None\n\n# Note: We've provided the loop-based solution as the primary one\n# to help learners understand the underlying concept better."}]};
+
+      function renderCodeList(rootElement, codeList, className, titlePrefix) {
+        for (var i = 0; i < codeList.length; i++) {
+          var elem = codeList[i];
+          var jsElem = document.createElement("div");
+          jsElem.className = className;
+          var jsElemTitle = document.createElement("h3");
+          jsElemTitle.innerHTML = titlePrefix + " " + (i + 1);
+          var jsElemBody = document.createElement("code");
+          jsElemBody.className = "code-block black-block";
+          jsElemBody.innerHTML = "<pre>" + elem.content + "</pre>";
+          jsElem.appendChild(jsElemTitle);
+          jsElem.appendChild(jsElemBody);
+          rootElement.appendChild(jsElem);
+        }
+      }
+      
+      function main() {
+        // display the assignment
+        var codingTitle = document.getElementById("coding-title");
+        codingTitle.innerHTML = quizData.title;
+        
+        var codingInstructions = document.getElementById("coding-instructions");
+        if (quizData.hasInstructions) {
+          codingInstructions.innerHTML = quizData.instructions;
+        } else {
+          codingInstructions.innerHTML = "<span class=\"italic-text\">" + quizData.instructions
+            + "</span>";
+        }
+
+        // display the test(s)
+        var codingTests = document.getElementById("coding-tests");
+        if (!quizData.hasTests) {
+          codingTests.innerHTML = "<span class=\"italic-text\">" + quizData.tests + "</span>";
+        } else {
+          renderCodeList(codingTests, quizData.tests, "coding-test", "Test");
+        }
+        
+
+        // display the solution(s)
+        var codingSolutions = document.getElementById("coding-solutions");
+        if (!quizData.hasSolutions) {
+          codingSolutions.innerHTML = "<span class=\"italic-text\">" + quizData.solutions + "</span>";
+        } else {
+          renderCodeList(codingSolutions, quizData.solutions, "coding-solution", "Solution");
+        }
+      }
+    </script>
+  </body>
+</html>
