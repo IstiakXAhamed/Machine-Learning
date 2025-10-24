@@ -1,0 +1,7 @@
+{
+    "python.defaultInterpreterPath": "${workspaceFolder}/phitronML/Scripts/python.exe",
+    "jupyter.kernels.filter": [],
+    "jupyter.widgetScriptSources": ["jsdelivr.com", "unpkg.com"],
+    "notebook.experimental.remoteSave": false,
+    "git.ignoreLimitWarning": true
+}
