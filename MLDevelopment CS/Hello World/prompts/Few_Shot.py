@@ -1,11 +1,16 @@
 #Few shot prompting - a technique where the model is given a few examples to learn from before performing the task
+import os
 from dotenv import load_dotenv
 from openai import OpenAI
 
 load_dotenv()
 
+genai_key = os.getenv("GENAI_API_KEY")
+if not genai_key:
+    raise RuntimeError("GENAI_API_KEY is not set in the environment")
+
 client = OpenAI(
-    api_key="AIzaSyByBKPJjlrIZFXkZatEMoMm9p1GTPoKE_c",
+    api_key=genai_key,
     base_url="https://generativelanguage.googleapis.com/v1beta/"
 )
 # Few-shot examples embedded in the system prompt
